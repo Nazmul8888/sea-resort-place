@@ -6,12 +6,12 @@ import Loader from "../../components/Shared/Loader";
 
 const RoomDetails = () => {
     const {id} = useParams()
-    const [room, setRoom] = useState([]);
+    const [room, setRoom] = useState({});
     const [loading, setLoading] = useState(false)
     
     useEffect(()=>{
         setLoading(true)
-        fetch('rooms.json')
+        fetch('/rooms.json')
         .then(res=>res.json())
        .then(data=>{
         const singleRoom = data.find(room=> room._id === id)
@@ -26,6 +26,14 @@ const RoomDetails = () => {
     return (
         <Container>
             {room?.title}
+            <div className="">
+                <div className=" flex flex-col gap-6">
+
+                </div>
+                <div>
+
+                </div>
+            </div>
         </Container>
     );
 };
