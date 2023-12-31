@@ -1,7 +1,35 @@
 import { Link } from 'react-router-dom'
 import { FcGoogle } from 'react-icons/fc'
+import { imageUpload } from '../../api/utils'
+import useAuth from '../../hooks/useAuth'
 
 const SignUp = () => {
+
+  const {createUser,updateUserProfile,signInWithGoogle} = useAuth()
+
+
+
+  const handelSubmit = async event=>{
+    event.preventDefault ()
+    const from = event.target
+    const name= from.name.value
+    const email= from.email.value
+    const password = from.password.value
+    const image= from.image.files[0]
+    const imageData=await imageUpload(image)
+    const result = await createUser(email,password)
+
+    await updateUserProfile(name,imageData?.data?.display_url)
+
+    console.log(result);
+
+
+
+
+    console.log(imageData)
+    // console.log(image);
+    console.log({name,email,password})
+  }
   return (
     <div className='flex justify-center items-center min-h-screen'>
       <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
@@ -9,7 +37,7 @@ const SignUp = () => {
           <h1 className='my-3 text-4xl font-bold'>Sign Up</h1>
           <p className='text-sm text-gray-400'>Welcome to StayVista</p>
         </div>
-        <form
+        <form onSubmit={handelSubmit}
           noValidate=''
           action=''
           className='space-y-6 ng-untouched ng-pristine ng-valid'
